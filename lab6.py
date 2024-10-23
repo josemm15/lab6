@@ -9,7 +9,9 @@ def password_encoder(password):
 def password_decoder(encoded_password):
     # Ensure the input is exactly 8 digits long
     if len(encoded_password) != 8 or not encoded_password.isdigit():
-        return "Error: Input must be an 8-digit string.", None
+        return "Error: Input must be an 8-digit string."
+    decoded_string = "".join([str((int(char) - 3) % 10) for char in encoded_password])
+    return decoded_string
 
 def print_menu():
     while True:
@@ -25,6 +27,14 @@ def print_menu():
             password = input("Please enter your password to encode: ")
             print("Your password has been encoded and stored!\n")
             encoded_password = password_encoder(password)
+        elif menu_option == 2:
+            # Decoding option
+            if encoded_password:
+                # Decode the encoded password by reversing the shift
+                original_password = password_decoder(encoded_password)  # Applying encode twice reverses the shift
+                print(f"The encoded password is {encoded_password}, and the original password is {original_password}.")
+            else:
+                print("No password has been encoded yet.")
 
 
         elif menu_option == 3:
